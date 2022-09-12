@@ -25,7 +25,7 @@ let ContenedorMongoDb= class {
         try{
             // await fs.promises.writeFile(ruta, JSON.stringify(resultados[1],null, 2))
             await models2.create([data]);
-            resultado=console.log("Guardo Exitosamente");
+            resultado=await models2.find({username: data.username}, {_id: 0, __v: 0});
         }
         catch(err){
             resultado=console.log(err);
@@ -37,7 +37,7 @@ let ContenedorMongoDb= class {
         let resultado2,r3;
         try{
             const contenido =await models2.updateOne({username:name},{$set: {contador:datos}});
-            resultado2 =contenido;
+            resultado2 =await models2.find({username: name}, {_id: 0, __v: 0});
         }
         catch(err){
             resultado2= err;
@@ -148,19 +148,20 @@ let ContenedorMongoDb= class {
 
 
 async function guardar(resultados,data){
-    let id;
+    let resultado;
     let datos =data;
     datos.id= resultados[0];
     resultados[1].push(datos);
     try{
         // await fs.promises.writeFile(ruta, JSON.stringify(resultados[1],null, 2))
         await models.create([datos]);
+        resultado=await models.find({id: datos.id}, {_id: 0, __v: 0});
     }
     catch(err){
-        console.log(err);
+        resultado=err;
     }
     // return console.log(err);
-    return ""+resultados[0];
+    return resultado;
 }  
 
 

@@ -59,7 +59,7 @@ async function insertarUsuarios(data){
 // }
 async function insertar(data,tabla){
     let dto= getDaoDbInsert(data,tabla);
-    await dto;
+    return await dto;
 }
 async function listar(tabla){
     let dto1= getDao(tabla);

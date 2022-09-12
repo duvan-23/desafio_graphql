@@ -27,6 +27,7 @@ const os = require( 'os');
 const compression = require('compression');
 const logger = require( './scripts/logger.js');
 const {routerOps}=require('./rutas/rutas.js');
+const GraphQLController = require ("./controlador/GraphQLCrontroller.js");
 const routerInfo = new Router()
 const options_puerto ={
     alias:{
@@ -150,6 +151,7 @@ if(cluster.isPrimary && modo =="CLUSTER" || modoCluster && cluster.isPrimary){
         logger.error(err);
     });
     app.use('/info', routerInfo);
+    app.use("/graphql", new GraphQLController());
     app.use('/', routerOps);
     const PORT = process.env.PORT || parseInt(process.argv[2]) || 8080
 
